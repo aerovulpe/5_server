@@ -35,7 +35,7 @@ import java.util.Properties;
  * Created by Aaron on 19/04/2016.
  */
 @Configuration
-@ComponentScan({"com.namespace"})
+@ComponentScan({"io.wolfbeacon.server"})
 @Import({Pac4JConfig.class})
 @EnableWebMvc
 @EnableTransactionManagement
