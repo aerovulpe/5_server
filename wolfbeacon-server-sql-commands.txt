@@ -6,7 +6,7 @@ naturalId varchar(100) NOT NULL UNIQUE,
 password varchar(60),
 firstName varchar(40) NOT NULL, 
 lastName varchar(50) NOT NULL,
-email varchar(50) NOT NULL,
+email varchar(254) NOT NULL,
 gender varchar(15),
 locale varchar(40),
 pictureUrl varchar(100),
@@ -15,6 +15,8 @@ location varchar(100));
 CREATE TABLE roles (accountId int(10) NOT NULL, role varchar(25) NOT NULL);
 
 CREATE TABLE permissions (accountId int(10) NOT NULL, permission varchar(50) NOT NULL);
+
+CREATE TABLE mailing_list (id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, emailAddress varchar(254) NOT NULL UNIQUE, name text);
 
 CREATE USER 'wolfbeacon_admin'@'localhost' IDENTIFIED BY 'hackerpass';
 GRANT ALL PRIVILEGES ON * . * TO 'wolfbeacon_admin'@'localhost';

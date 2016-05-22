@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AccountDAOImpl extends SessionDAO<Account, Long> implements AccountDAO {
+public class AccountDAOImpl extends AbstractHibernateDAO<Account, Long> implements AccountDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountDAOImpl.class);
 

@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity
 @JsonIgnoreProperties({"id", "naturalId", "password", "roles", "permissions"})
 @Table(name = "accounts")
-public class Account {
+public class Account implements DomainModel<Long> {
     public static final String ROLE_USER = "ROLE_USER";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
