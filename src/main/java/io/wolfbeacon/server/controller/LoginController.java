@@ -42,7 +42,7 @@ public class LoginController extends BaseController {
             }
         } else {
             logger.info("not logged in!");
-            serveHtmlPage("static/landing.html", response);
+            serveHtmlPage("static/index.html", response);
         }
     }
 
