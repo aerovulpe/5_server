@@ -12,7 +12,7 @@
 <body>
 <header>
     <div class="container">
-        <a href="#">
+        <a href="#" onclick="backToTop();">
             <div class="logo">WolfBeacon</div>
         </a>
         <ul class="nav-menu">
@@ -36,15 +36,15 @@
                 <div class="coming-soon">
                     <p>Coming Soon On</p>
                     <div class="cs-store">
-                        <div class="store-icn">&nbsp;</div>
-                        <div class="store-icn">&nbsp;</div>
-                        <div class="store-icn">&nbsp;</div>
+                        <div class="store-icn"><img src="/assets/img/android-icon.png"></div>
+                        <div class="store-icn"><img src="/assets/img/ios-icon.png"></div>
+                        <div class="store-icn"><img src="/assets/img/webapp-icon.png"></div>
                     </div>
                 </div>
             </div>
             <div class="cols-50 landing-right">
                 <div class="text-desc">
-                    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, consequatur cumque? Ipsam laborum molestias maxime ratione, dolor culpa, facere quo eveniet quam iure aliquam architecto. </p>
+                    <p> Welcome to the world’s first platform for Hackers and Organizers! </p>
                 </div>
                 <div class="subscribe">
                     <form action="index.html" method="post"> <input type="email" name="email" class="subscribe-input" placeholder="somebody@example.com"> <button type="submit" class="button subscribe-submit">Stay Updated</button> </form>
@@ -58,38 +58,38 @@
     <div class="container">
         <div class="row">
             <div class="cols-33 fe-img">
-                <div class="fe-icon"></div>
+                <div class="fe-icon"><img src="/assets/img/open-source-icon.png"></div>
             </div>
             <div class="cols-66 fe-text">
-                <div class="fe-title">Feature Title</div>
-                <div class="fe-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis, impedit! Possimus eius quia maiores ab ullam doloremque sit placeat, laboriosam.</div>
+                <div class="fe-title">Open Source Software</div>
+                <div class="fe-desc">The whole platform is available for community customization on GitHub.</div>
             </div>
         </div>
         <div class="row row-alt">
             <div class="cols-33 fe-img">
-                <div class="fe-icon"></div>
+                <div class="fe-icon"><img src="/assets/img/no-ads-icon.png"></div>
             </div>
             <div class="cols-66 fe-text">
-                <div class="fe-title">Feature Title</div>
-                <div class="fe-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus explicabo facilis ab sequi ea quibusdam commodi quo minus molestias inventore!</div>
+                <div class="fe-title">Completely Free & No Ads</div>
+                <div class="fe-desc">Unlike most services which bombard users with Ads or secretly sell User Data, we offer the full service with no catches. Thanks to a passionate group of hackers who just want to create something awesome.</div>
             </div>
         </div>
         <div class="row">
             <div class="cols-33 fe-img">
-                <div class="fe-icon"></div>
+                <div class="fe-icon"><img src="/assets/img/quick-signup-icon.png"></div>
             </div>
             <div class="cols-66 fe-text">
-                <div class="fe-title">Feature Title</div>
-                <div class="fe-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id recusandae reiciendis ratione voluptatibus! Dolor excepturi modi, aut voluptatum veritatis optio!</div>
+                <div class="fe-title">Quick Sign-Ups</div>
+                <div class="fe-desc">Hackers are provided with all the information of a hackathon in one place. With an easy click registration you can favorite or apply to hackathon with a click of a button.</div>
             </div>
         </div>
         <div class="row row-alt">
             <div class="cols-33 fe-img">
-                <div class="fe-icon"></div>
+                <div class="fe-icon"><img src="/assets/img/open-source-icon.png"></div>
             </div>
             <div class="cols-66 fe-text">
-                <div class="fe-title">Feature Title</div>
-                <div class="fe-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae temporibus magni amet, magnam quam nobis ipsam et unde cumque veniam.</div>
+                <div class="fe-title">More Funding = Bigger Hackathons</div>
+                <div class="fe-desc">With free 1-on-1 consultation with hackathon organizers we provide the tools and expertise to increase the amount of funds your hackathon can receive. </div>
             </div>
         </div>
     </div>
@@ -97,8 +97,8 @@
 <section class="about" id="about">
     <div class="container">
         <h3 class="section-title">Who We Are</h3>
-        <div class="about-text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae quas, placeat accusamus aliquid dolorem quam a dicta minus voluptatem obcaecati qui velit, atque asperiores quaerat, saepe ex totam quae dolor in illum nihil possimus. Officia officiis
-            perspiciatis libero ut odit. </div>
+        <div class="about-text"> We're a group of passionate hackers who wanted a cool side project that has a big impact on hackathons around the globe. With hackathons giving so much to hackers it only makes sense to give back to the organizers so that they can make hackathons
+            much bigger thereby improving the experience for hackers once again! </div>
         <div class="stats-container"> &nbsp;
             <div class="people-cnt">
                 <div><strong>11</strong><br>People</div>
@@ -120,6 +120,41 @@
         </div>
     </div>
 </section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript">
+    var $root = $('html, body');
+
+    function scrollTo()
+    {
+        $('a[href^="#"]:not([href="#"])').on('click', function(e)
+        {
+            e.preventDefault();
+            var $target = $(this.hash);
+            var hash = this.hash;
+            $root.stop().animate(
+                    {
+                        scrollTop: $target.offset().top - 70
+                    }, 900, 'swing', function()
+                    {
+                        location.hash = hash;
+                    });
+        })
+        return false;
+    }
+
+    function backToTop(e)
+    {
+        event.preventDefault();
+        $root.animate(
+                {
+                    scrollTop: 0
+                }, 900, 'swing', function()
+                {
+                    location.hash = "#";
+                });
+        return false;
+    }
+</script>
 </body>
 
 </html>
