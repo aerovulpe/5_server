@@ -4,14 +4,14 @@ import io.wolfbeacon.server.model.Account;
 
 import java.util.List;
 
-public interface AccountManager {
+public interface UserAccountManager {
     boolean updateAccount(Account account);
 
     Account getEnabledAccount(String naturalId);
 
     Account getAccountByNaturalId(String naturalId);
 
-    Long createNewAccount(Account account);
+    Long createNewUserAccount(Account account);
 
     List<Account> getEnabledAccounts();
 

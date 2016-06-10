@@ -1,21 +1,26 @@
 package io.wolfbeacon.server.service;
 
 import io.wolfbeacon.server.dao.AccountDAO;
+import io.wolfbeacon.server.dao.UserDAO;
 import io.wolfbeacon.server.model.Account;
+import io.wolfbeacon.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 @Transactional
-public class AccountManagerImpl implements AccountManager {
+public class UserAccountManagerImpl implements UserAccountManager {
 
+    @Autowired
+    private UserDAO userDAO;
     @Autowired
     private AccountDAO accountDAO;
 
-    public AccountManagerImpl() {
+    public UserAccountManagerImpl() {
     }
 
     @Override
@@ -35,8 +40,14 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
-    public Long createNewAccount(Account account) {
-        return this.accountDAO.create(account);
+    public Long createNewUserAccount(Account account) {
+        Long id = accountDAO.create(account);
+        account.setId(id);
+        User user = new User();
+        user.setAccount(account);
+        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        userDAO.create(user);
+        return id;
     }
 
     @Override

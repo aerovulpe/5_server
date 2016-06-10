@@ -4,12 +4,12 @@ import com.google.gson.JsonObject;
 import com.google.identitytoolkit.GitkitClient;
 import com.google.identitytoolkit.GitkitClientException;
 import com.google.identitytoolkit.GitkitServerException;
+import com.sendgrid.SendGrid;
+import com.sendgrid.SendGridException;
 import io.wolfbeacon.server.model.Account;
 import io.wolfbeacon.server.security.gitkit.GitKitProfile;
 import io.wolfbeacon.server.web.exception.InternalServerErrorException;
 import io.wolfbeacon.server.web.exception.NotFoundException;
-import com.sendgrid.SendGrid;
-import com.sendgrid.SendGridException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class GitKitIdentityService {
     @Autowired
     private ServletContext servletContext;
     @Autowired
-    private AccountManager accountManager;
+    private UserAccountManager userAccountManager;
     @Autowired
     private SendGrid sendGrid;
     private GitkitClient GITKIT_CLIENT;
@@ -158,7 +158,7 @@ public class GitKitIdentityService {
         String userId = gitkitUserPayload.get("user_id").getAsString();
         String email = gitkitUserPayload.get("email").getAsString();
         boolean verified = gitkitUserPayload.get("verified").getAsBoolean();
-        Account account = accountManager.getAccountByNaturalId(userId);
+        Account account = userAccountManager.getAccountByNaturalId(userId);
         boolean newAccount = account == null;
 
         if (!newAccount && !updateAccount) {
@@ -186,7 +186,7 @@ public class GitKitIdentityService {
         }
         account.setEmail(email);
         if (verified) {
-            account.addPermission(Account.PERMISSION_EMAIL_VERTIFIED);
+            account.addPermission(Account.PERMISSION_EMAIL_VERIFIED);
         }
 
         if (newAccount) {
@@ -199,9 +199,9 @@ public class GitKitIdentityService {
                     e.printStackTrace();
                 }
             }
-            accountManager.createNewAccount(account);
+            userAccountManager.createNewUserAccount(account);
         } else {
-            accountManager.updateAccount(account);
+            userAccountManager.updateAccount(account);
         }
 
         return gitKitProfileFromAccount(account);
@@ -216,10 +216,7 @@ public class GitKitIdentityService {
         profile.addAttribute("family_name", account.getLastName());
         profile.addAttribute("name", account.getFirstName() + " " + account.getLastName());
         profile.addAttribute("display_name", account.getFirstName());
-        profile.addAttribute("gender", account.getGender());
-        profile.addAttribute("locale", account.getLocale());
         profile.addAttribute("picture_url", account.getPictureUrl());
-        profile.addAttribute("location", account.getLocation());
         profile.addRoles(new ArrayList<>(account.getRoles()));
         profile.addPermissions(new ArrayList<>(account.getPermissions()));
         return profile;

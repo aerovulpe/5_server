@@ -2,21 +2,53 @@ CREATE DATABASE wolfbeacon_data;
 USE wolfbeacon_data;
 
 CREATE TABLE accounts (id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-naturalId varchar(100) NOT NULL UNIQUE,
-password varchar(60),
-firstName varchar(40) NOT NULL, 
-lastName varchar(50) NOT NULL,
-email varchar(254) NOT NULL,
-gender varchar(15),
-locale varchar(40),
-pictureUrl varchar(100),
-location varchar(100));
+                       naturalId varchar(100) NOT NULL UNIQUE,
+                       firstName varchar(40) NOT NULL,
+                       lastName varchar(50) NOT NULL,
+                       email varchar(254) NOT NULL,
+                       pictureUrl text);
 
-CREATE TABLE roles (accountId int(10) NOT NULL, role varchar(25) NOT NULL);
+CREATE TABLE roles (accountId int(10) NOT NULL,
+                    role varchar(25) NOT NULL);
 
-CREATE TABLE permissions (accountId int(10) NOT NULL, permission varchar(50) NOT NULL);
+CREATE TABLE permissions (accountId int(10) NOT NULL,
+                          permission varchar(50) NOT NULL);
 
-CREATE TABLE mailing_list (id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, emailAddress varchar(254) NOT NULL UNIQUE, name text);
+
+CREATE TABLE mailing_list (id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                           emailAddress varchar(254) NOT NULL UNIQUE,
+                           name varchar(90));
+
+CREATE TABLE users (
+  id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  createdAt timestamp,
+  lastUpdatedAt timestamp
+);
+
+CREATE TABLE hackathon_events (
+  id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  creatorId int(10),
+  name text,
+  createdAt timestamp,
+  lastUpdatedAt timestamp,
+  eventDate timestamp,
+  eventStatus int(1),
+  eventLocation text,
+  city varchar(50),
+  state varchar(45),
+  zip varchar(8),
+  country varchar(45),
+  eventPictureUrl text,
+  CONSTRAINT hackathon_events_users__fk FOREIGN KEY (creatorId) REFERENCES users(id)
+);
+
+CREATE TABLE attending_status (
+  userId int(10),
+  eventId int(10),
+  attendingStatus int(1),
+  CONSTRAINT attending_status_events__fk FOREIGN KEY (eventId) REFERENCES hackathon_events(id),
+  CONSTRAINT attending_status_users__fk FOREIGN KEY (userId) REFERENCES users(id)
+);
 
 CREATE USER 'wolfbeacon_admin'@'localhost' IDENTIFIED BY 'hackerpass';
 GRANT ALL PRIVILEGES ON * . * TO 'wolfbeacon_admin'@'localhost';
