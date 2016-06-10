@@ -2,7 +2,6 @@ package io.wolfbeacon.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.NaturalId;
-import org.pac4j.core.profile.Gender;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,14 +9,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({"id", "naturalId", "password", "roles", "permissions"})
+@JsonIgnoreProperties({"id", "naturalId", "roles", "permissions", "user"})
 @Table(name = "accounts")
 public class Account implements DomainModel<Long> {
     public static final String ROLE_USER = "ROLE_USER";
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     public static final String PERMISSION_ENABLED = "ENABLED";
-    public static final String PERMISSION_EMAIL_VERTIFIED = "EMAIL_VERIFIED";
+    public static final String PERMISSION_EMAIL_VERIFIED = "EMAIL_VERIFIED";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,16 +24,12 @@ public class Account implements DomainModel<Long> {
     @NaturalId
     @Column(name = "naturalId", unique = true, nullable = false)
     private String naturalId;
-    private String password;
 
     private String firstName;
     private String lastName;
     @Column(name = "email", nullable = false)
     private String email;
-    private Gender gender;
-    private String locale;
     private String pictureUrl;
-    private String location;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
@@ -53,18 +48,15 @@ public class Account implements DomainModel<Long> {
     private Set<String> permissions = new HashSet<>();
 
 
-    public Account(@NotNull String naturalId, String password, @NotNull String firstName, @NotNull String lastName,
+    public Account(@NotNull String naturalId, @NotNull String firstName, @NotNull String lastName,
                    @NotNull String email) {
-        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.naturalId = naturalId;
-        this.password = password;
     }
 
     public Account() {
-        gender = Gender.UNSPECIFIED;
     }
 
     public void addRole(String role) {
@@ -95,14 +87,10 @@ public class Account implements DomainModel<Long> {
     public int hashCode() {
         int result = getId().hashCode();
         result = 31 * result + getNaturalId().hashCode();
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
         result = 31 * result + getFirstName().hashCode();
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getEmail().hashCode();
-        result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
-        result = 31 * result + (getLocale() != null ? getLocale().hashCode() : 0);
         result = 31 * result + (getPictureUrl() != null ? getPictureUrl().hashCode() : 0);
-        result = 31 * result + (getLocation() != null ? getLocation().hashCode() : 0);
         result = 31 * result + getRoles().hashCode();
         result = 31 * result + getPermissions().hashCode();
         return result;
@@ -117,16 +105,10 @@ public class Account implements DomainModel<Long> {
 
         if (!getId().equals(account.getId())) return false;
         if (!getNaturalId().equals(account.getNaturalId())) return false;
-        if (getPassword() != null ? !getPassword().equals(account.getPassword()) : account.getPassword() != null)
-            return false;
         if (!getFirstName().equals(account.getFirstName())) return false;
         if (!getLastName().equals(account.getLastName())) return false;
         if (!getEmail().equals(account.getEmail())) return false;
-        if (getGender() != account.getGender()) return false;
-        if (getLocale() != null ? !getLocale().equals(account.getLocale()) : account.getLocale() != null) return false;
         if (getPictureUrl() != null ? !getPictureUrl().equals(account.getPictureUrl()) : account.getPictureUrl() != null)
-            return false;
-        if (getLocation() != null ? !getLocation().equals(account.getLocation()) : account.getLocation() != null)
             return false;
         if (!getRoles().equals(account.getRoles())) return false;
         return getPermissions().equals(account.getPermissions());
@@ -147,10 +129,6 @@ public class Account implements DomainModel<Long> {
 
     public void setNaturalId(@NotNull String naturalId) {
         this.naturalId = naturalId;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getFirstName() {
@@ -177,37 +155,12 @@ public class Account implements DomainModel<Long> {
         this.email = email;
     }
 
-    @Enumerated(EnumType.STRING)
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
     public String getPictureUrl() {
         return pictureUrl;
     }
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public Set<String> getRoles() {
@@ -226,23 +179,15 @@ public class Account implements DomainModel<Long> {
         this.permissions = permissions;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "Account{" +
                 "id=" + id +
                 ", naturalId='" + naturalId + '\'' +
-                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", gender=" + gender +
-                ", locale='" + locale + '\'' +
                 ", pictureUrl='" + pictureUrl + '\'' +
-                ", location='" + location + '\'' +
                 ", roles=" + roles +
                 ", permissions=" + permissions +
                 '}';
