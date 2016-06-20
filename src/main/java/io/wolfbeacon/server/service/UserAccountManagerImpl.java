@@ -29,9 +29,19 @@ public class UserAccountManagerImpl implements UserAccountManager {
     }
 
     @Override
+    public boolean updateUser(User user) {
+        return userDAO.update(user);
+    }
+
+    @Override
     public Account getEnabledAccount(String naturalId) {
         Account account = accountDAO.getAccount(naturalId);
         return account.hasPermission(Account.PERMISSION_ENABLED) ? account : null;
+    }
+
+    @Override
+    public User getUser(Long id) {
+        return userDAO.retrieve(id);
     }
 
     @Override
@@ -78,6 +88,9 @@ public class UserAccountManagerImpl implements UserAccountManager {
     @Override
     public Account deleteAccountByNaturalId(String naturalId) {
         Account account = accountDAO.getAccount(naturalId);
+        if (account != null) {
+            userDAO.delete(getUser(account.getId()));
+        }
         return accountDAO.delete(account) ? account : null;
     }
 }
