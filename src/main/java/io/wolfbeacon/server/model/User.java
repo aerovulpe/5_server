@@ -5,6 +5,8 @@ import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Aaron on 03/06/2016.
@@ -22,6 +24,8 @@ public class User implements DomainModel<Long> {
     private Account account;
     private Timestamp createdAt;
     private Timestamp lastUpdatedAt;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.user")
+    private Set<AttendingStatus> attendingStatuses = new HashSet<>();
 
     public User() {
     }
@@ -58,13 +62,22 @@ public class User implements DomainModel<Long> {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
+    public Set<AttendingStatus> getAttendingStatuses() {
+        return attendingStatuses;
+    }
+
+    public void setAttendingStatuses(Set<AttendingStatus> attendingStatuses) {
+        this.attendingStatuses = attendingStatuses;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", accountId=" + account +
+                ", account=" + account +
                 ", createdAt=" + createdAt +
                 ", lastUpdatedAt=" + lastUpdatedAt +
+                ", attendingStatuses=" + attendingStatuses +
                 '}';
     }
 
@@ -76,11 +89,12 @@ public class User implements DomainModel<Long> {
         User user = (User) o;
 
         if (getId() != null ? !getId().equals(user.getId()) : user.getId() != null) return false;
-        if (getAccount() != null ? !getAccount().equals(user.getAccount()) : user.getAccount() != null)
-            return false;
+        if (getAccount() != null ? !getAccount().equals(user.getAccount()) : user.getAccount() != null) return false;
         if (getCreatedAt() != null ? !getCreatedAt().equals(user.getCreatedAt()) : user.getCreatedAt() != null)
             return false;
-        return getLastUpdatedAt() != null ? getLastUpdatedAt().equals(user.getLastUpdatedAt()) : user.getLastUpdatedAt() == null;
+        if (getLastUpdatedAt() != null ? !getLastUpdatedAt().equals(user.getLastUpdatedAt()) : user.getLastUpdatedAt() != null)
+            return false;
+        return getAttendingStatuses() != null ? getAttendingStatuses().equals(user.getAttendingStatuses()) : user.getAttendingStatuses() == null;
 
     }
 
@@ -90,6 +104,7 @@ public class User implements DomainModel<Long> {
         result = 31 * result + (getAccount() != null ? getAccount().hashCode() : 0);
         result = 31 * result + (getCreatedAt() != null ? getCreatedAt().hashCode() : 0);
         result = 31 * result + (getLastUpdatedAt() != null ? getLastUpdatedAt().hashCode() : 0);
+        result = 31 * result + (getAttendingStatuses() != null ? getAttendingStatuses().hashCode() : 0);
         return result;
     }
 }

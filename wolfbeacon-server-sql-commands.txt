@@ -8,10 +8,10 @@ CREATE TABLE accounts (id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
                        email varchar(254) NOT NULL,
                        pictureUrl text);
 
-CREATE TABLE roles (accountId int(10) NOT NULL,
+CREATE TABLE accounts_roles (accountId int(10) NOT NULL,
                     role varchar(25) NOT NULL);
 
-CREATE TABLE permissions (accountId int(10) NOT NULL,
+CREATE TABLE accounts_permissions (accountId int(10) NOT NULL,
                           permission varchar(50) NOT NULL);
 
 
@@ -22,18 +22,18 @@ CREATE TABLE mailing_list (id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 CREATE TABLE users (
   id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   createdAt timestamp,
-  lastUpdatedAt timestamp
+  lastUpdatedAt timestamp NULL DEFAULT NULL
 );
 
 CREATE TABLE hackathon_events (
   id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  creatorId int(10),
+  creatorId int(10) NOT NULL,
   name text,
   createdAt timestamp,
-  lastUpdatedAt timestamp,
+  lastUpdatedAt timestamp NULL DEFAULT NULL,
   eventDate timestamp,
   eventStatus int(1),
-  eventLocation text,
+  eventAddress text,
   city varchar(50),
   state varchar(45),
   zip varchar(8),

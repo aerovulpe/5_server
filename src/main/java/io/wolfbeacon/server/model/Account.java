@@ -33,7 +33,7 @@ public class Account implements DomainModel<Long> {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
-            name = "roles",
+            name = "accounts_roles",
             joinColumns = @JoinColumn(name = "accountId")
     )
     @Column(name = "role")
@@ -41,7 +41,7 @@ public class Account implements DomainModel<Long> {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
-            name = "permissions",
+            name = "accounts_permissions",
             joinColumns = @JoinColumn(name = "accountId")
     )
     @Column(name = "permission")
