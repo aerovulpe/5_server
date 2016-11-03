@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "hackathon_events")
-public class HackathonEvent implements DomainModel<Long>{
+public class Hackathon implements DomainModel<Long>{
 
     public enum Status {
     }
@@ -32,7 +32,7 @@ public class HackathonEvent implements DomainModel<Long>{
     private String eventPictureUrl;
 
 
-    public HackathonEvent() {
+    public Hackathon() {
     }
 
     public Long getId() {
@@ -141,7 +141,7 @@ public class HackathonEvent implements DomainModel<Long>{
 
     @Override
     public String toString() {
-        return "HackathonEvent{" +
+        return "Hackathon{" +
                 "id=" + id +
                 ", creator=" + creator +
                 ", name='" + name + '\'' +
@@ -163,7 +163,7 @@ public class HackathonEvent implements DomainModel<Long>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        HackathonEvent that = (HackathonEvent) o;
+        Hackathon that = (Hackathon) o;
 
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getCreator() != null ? !getCreator().equals(that.getCreator()) : that.getCreator() != null) return false;

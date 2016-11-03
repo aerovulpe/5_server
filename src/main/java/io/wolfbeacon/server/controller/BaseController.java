@@ -63,6 +63,8 @@ public abstract class BaseController {
         return account;
     }
 
+    // TODO
+
     private String getUserNaturalId(CommonProfile profile) {
         return profile.getId();
     }

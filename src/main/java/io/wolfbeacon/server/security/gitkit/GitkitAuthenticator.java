@@ -23,7 +23,7 @@ public class GitkitAuthenticator implements TokenAuthenticator {
         try {
             profile = gitKitIdentityService.getGitKitProfile(credentials.getToken(), false);
         } catch (Exception e) {
-            throw new CredentialsException("Could not authenticate user.");
+            throw new CredentialsException("Could not authenticate user.", e);
         }
 
         if (profile == null) {

@@ -7,6 +7,7 @@ import org.pac4j.core.credentials.extractor.CredentialsExtractor;
 import org.pac4j.core.exception.RequiresHttpAction;
 import org.pac4j.core.util.CommonHelper;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 /**
@@ -16,7 +17,7 @@ class GitKitCookieExtractor implements CredentialsExtractor<TokenCredentials> {
     private final String cookieName;
     private final String clientName;
 
-    GitKitCookieExtractor(final String cookieName, final String clientName) {
+    GitKitCookieExtractor(@NotNull final String cookieName, final String clientName) {
         this.cookieName = cookieName;
         this.clientName = clientName;
     }
