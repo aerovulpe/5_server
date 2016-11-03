@@ -12,7 +12,7 @@ public class AttendingStatusId implements Serializable{
     @ManyToOne
     private User user;
     @ManyToOne
-    private HackathonEvent hackathonEvent;
+    private Hackathon hackathon;
 
     public User getUser() {
         return user;
@@ -22,19 +22,19 @@ public class AttendingStatusId implements Serializable{
         this.user = user;
     }
 
-    public HackathonEvent getHackathonEvent() {
-        return hackathonEvent;
+    public Hackathon getHackathon() {
+        return hackathon;
     }
 
-    public void setHackathonEvent(HackathonEvent hackathonEvent) {
-        this.hackathonEvent = hackathonEvent;
+    public void setHackathon(Hackathon hackathon) {
+        this.hackathon = hackathon;
     }
 
     @Override
     public String toString() {
         return "AttendingStatusId{" +
                 "user=" + user +
-                ", hackathonEvent=" + hackathonEvent +
+                ", hackathon=" + hackathon +
                 '}';
     }
 
@@ -46,14 +46,14 @@ public class AttendingStatusId implements Serializable{
         AttendingStatusId that = (AttendingStatusId) o;
 
         if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
-        return getHackathonEvent() != null ? getHackathonEvent().equals(that.getHackathonEvent()) : that.getHackathonEvent() == null;
+        return getHackathon() != null ? getHackathon().equals(that.getHackathon()) : that.getHackathon() == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = getUser() != null ? getUser().hashCode() : 0;
-        result = 31 * result + (getHackathonEvent() != null ? getHackathonEvent().hashCode() : 0);
+        result = 31 * result + (getHackathon() != null ? getHackathon().hashCode() : 0);
         return result;
     }
 }
