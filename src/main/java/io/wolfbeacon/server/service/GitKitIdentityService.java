@@ -40,8 +40,16 @@ public class GitKitIdentityService {
 
     {
         try {
-            GITKIT_CLIENT = GitkitClient.createFromJson(getClass().getClassLoader()
-                    .getResource("gitkit-server-config.json").getPath().substring(1));
+            String os = System.getProperty("os.name").toLowerCase();
+            System.out.println(os);
+            if (os.indexOf("win") > 0) {
+                //substring(1) will return an Exception on Linux while running. The complete path is required (else condition)
+                GITKIT_CLIENT = GitkitClient.createFromJson(getClass().getClassLoader()
+                        .getResource("gitkit-server-config.json").getPath().substring(1));
+            } else {
+                GITKIT_CLIENT = GitkitClient.createFromJson(getClass().getClassLoader()
+                        .getResource("gitkit-server-config.json").getPath());
+            }
         } catch (GitkitClientException | IOException e) {
             e.printStackTrace();
         }

@@ -4,7 +4,6 @@ import org.pac4j.core.context.Cookie;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.TokenCredentials;
 import org.pac4j.core.credentials.extractor.CredentialsExtractor;
-import org.pac4j.core.exception.RequiresHttpAction;
 import org.pac4j.core.util.CommonHelper;
 
 import javax.validation.constraints.NotNull;
@@ -23,7 +22,7 @@ class GitKitCookieExtractor implements CredentialsExtractor<TokenCredentials> {
     }
 
     @Override
-    public TokenCredentials extract(final WebContext context) throws RequiresHttpAction {
+    public TokenCredentials extract(final WebContext context) {
         Collection<Cookie> cookies = context.getRequestCookies();
         if (cookies == null) {
             return null;

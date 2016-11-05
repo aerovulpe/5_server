@@ -15,7 +15,6 @@ import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.context.Pac4jConstants;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.credentials.Credentials;
-import org.pac4j.core.exception.RequiresHttpAction;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.profile.UserProfile;
@@ -90,8 +89,8 @@ public class RequiresAuthenticationInterceptor extends HandlerInterceptorAdapter
                     try {
                         credentials = currentClient.getCredentials(context);
                         logger.debug("credentials: {}", credentials);
-                    } catch (final RequiresHttpAction e) {
-                        logger.debug("extra HTTP action required: {}", e.getCode());
+                    } catch (final Exception e) {
+                        logger.debug("extra HTTP action required: {}", e.getCause());
                         return false;
                     }
                     profile = currentClient.getUserProfile(credentials, context);
@@ -152,8 +151,8 @@ public class RequiresAuthenticationInterceptor extends HandlerInterceptorAdapter
         try {
             final IndirectClient currentClient = (IndirectClient) currentClients.get(0);
             currentClient.redirect(context);
-        } catch (final RequiresHttpAction e) {
-            logger.debug("extra HTTP action required: {}", e.getCode());
+        } catch (final Exception e) {
+            logger.debug("extra HTTP action required: {}", e.getCause());
         }
     }
 
