@@ -6,6 +6,8 @@ public interface GenericDAO<T, I> {
 
     T retrieve(I id);
 
+    void createOrUpdate(T item);
+
     boolean update(T item);
 
     boolean delete(T item);
