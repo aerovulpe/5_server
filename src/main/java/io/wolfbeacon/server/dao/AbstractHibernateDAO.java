@@ -8,7 +8,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -83,11 +82,6 @@ public abstract class AbstractHibernateDAO<T extends DomainModel<I>, I extends S
 
         getCurrentSession().delete(itemToDelete);
         return true;
-    }
-
-    @Override
-    public void createOrUpdate(@NotNull T item) {
-        getCurrentSession().saveOrUpdate(item);
     }
 
     @SuppressWarnings("unchecked")
